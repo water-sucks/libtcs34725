@@ -4,7 +4,23 @@ pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    const libtcs34725_dep = b.dependency("libtcs34725", .{});
+    const linkage = b.option(
+        std.builtin.LinkMode,
+        "linkage",
+        "whether to statically or dynamically link the library",
+    ) orelse @as(
+        std.builtin.LinkMode,
+        if (target.result.isGnuLibC())
+            .dynamic
+        else
+            .static,
+    );
+
+    const libtcs34725_dep = b.dependency("libtcs34725", .{
+        .target = target,
+        .optimize = optimize,
+        .linkage = linkage,
+    });
 
     const exe_mod = b.createModule(.{
         .target = target,
@@ -13,14 +29,15 @@ pub fn build(b: *std.Build) void {
     });
 
     const exe = b.addExecutable(.{
-        .name = "example",
+        .name = "tcs34725-example",
         .root_module = exe_mod,
+        .linkage = linkage,
     });
     b.installArtifact(exe);
 
-    exe.addCSourceFile(.{
-        .file = b.path("example.c"),
-        .flags = &.{ "-Wall", "-Wextra", "-Werror" },
+    exe.addCSourceFiles(.{
+        .files = src_files,
+        .flags = cflags,
     });
 
     exe.linkLibrary(libtcs34725_dep.artifact("tcs34725"));
@@ -30,6 +47,13 @@ pub fn build(b: *std.Build) void {
     if (b.args) |args| {
         run_cmd.addArgs(args);
     }
+
     const run_step = b.step("run", "Run the app");
     run_step.dependOn(&run_cmd.step);
 }
+
+const src_files = &.{
+    "example.c",
+};
+
+const cflags = &.{ "-Wall", "-Wextra", "-Werror" };

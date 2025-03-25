@@ -1,23 +1,34 @@
 const std = @import("std");
-const fs = std.fs;
-const mem = std.mem;
 
 pub fn build(b: *std.Build) !void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    const tcs34725_header_dir = b.addWriteFiles();
-    const tcs34725_header = tcs34725_header_dir.addCopyDirectory(b.path("include"), "", .{});
+    const linkage = b.option(
+        std.builtin.LinkMode,
+        "linkage",
+        "whether to statically or dynamically link the library",
+    ) orelse @as(
+        std.builtin.LinkMode,
+        if (target.result.isGnuLibC())
+            .dynamic
+        else
+            .static,
+    );
 
     const libtcs34725_mod = b.createModule(.{
         .target = target,
         .optimize = optimize,
         .link_libc = true,
+        .pic = true,
     });
+
+    const tcs34725_header_dir = b.addWriteFiles();
+    const tcs34725_header = tcs34725_header_dir.addCopyDirectory(b.path("include"), "", .{});
 
     const libtcs34725 = b.addLibrary(.{
         .name = "tcs34725",
-        .linkage = .static,
+        .linkage = linkage,
         .root_module = libtcs34725_mod,
     });
     b.installArtifact(libtcs34725);
@@ -26,7 +37,14 @@ pub fn build(b: *std.Build) !void {
     libtcs34725.installHeadersDirectory(tcs34725_header, "", .{});
 
     libtcs34725.addCSourceFiles(.{
-        .files = &.{"src/tcs34725.c"},
-        .flags = &.{ "-Wall", "-Wextra", "-Werror", "-fPIC", "-g" },
+        .root = b.path("src"),
+        .files = src_files,
+        .flags = cflags,
     });
 }
+
+const src_files = &.{
+    "tcs34725.c",
+};
+
+const cflags = &.{ "-Wall", "-Wextra", "-Werror" };

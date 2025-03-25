@@ -1,5 +1,5 @@
-CFLAGS = -Wall -Wextra -Werror $(shell pkg-config --cflags tcs34725)
-LDFLAGS = $(shell pkg-config --libs tcs34725)
+CFLAGS = -Wall -Wextra -Werror $(shell pkg-config --cflags tcs34725-static)
+LDFLAGS = $(shell pkg-config --libs tcs34725-static)
 
 SRC := example.c
 OBJ := example.o
@@ -22,4 +22,4 @@ install: $(BIN)
 	cp -t $(BIN_DIR) $(BIN)
 
 clean:
-	rm -f $(OBJ) $(BINB)
+	rm -f $(OBJ) $(BIN)
