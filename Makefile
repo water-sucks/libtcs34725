@@ -17,7 +17,7 @@ PREFIX ?= /usr/local
 
 PKGCONFIG_DIR = $(PREFIX)/lib/pkgconfig
 LIB_DIR = $(PREFIX)/lib
-INCLUDE_INSTALL_DIR = $(PREFIX)/include/tcs34725
+INCLUDE_INSTALL_DIR = $(PREFIX)/include
 BIN_DIR = $(PREFIX)/bin
 
 .PHONY: all
@@ -36,7 +36,7 @@ $(SRC_DIR)/%.o: $(SRC_DIR)/%.c
 install: static shared pkgconfig
 	mkdir -p $(INCLUDE_INSTALL_DIR) $(LIB_DIR) $(PKGCONFIG_DIR)
 
-	cp $(INCLUDE_DIR)/tcs34725/* $(INCLUDE_INSTALL_DIR)
+	cp -r $(INCLUDE_DIR)/* $(INCLUDE_INSTALL_DIR)
 	cp $(STATIC_LIB) $(SHARED_LIB) $(LIB_DIR)
 
 	cp tcs34725.pc tcs34725-static.pc $(PKGCONFIG_DIR)
