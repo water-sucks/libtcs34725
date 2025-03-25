@@ -57,7 +57,10 @@ dkms.conf
 # Nix/direnv shit
 /.direnv/
 /result
+/example/.direnv/
+/example/result
 
+# Example binary name
 example/tcs34725-example
 
 # editor cache
