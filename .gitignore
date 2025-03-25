@@ -66,3 +66,7 @@ example/tcs34725-example
 # editor cache
 /.ccls-cache/
 compile_commands.json
+
+# Zig is based, use it!
+/.zig-cache
+/zig-out

@@ -27,6 +27,8 @@
 
             bear
             pkg-config
+
+            zig
           ];
         };
       };
