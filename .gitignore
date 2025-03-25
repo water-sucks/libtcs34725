@@ -50,3 +50,10 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Nix/direnv shit
+/.direnv/
+/result
+
+# editor cache
+/.ccls-cache/
