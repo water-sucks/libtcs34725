@@ -70,3 +70,5 @@ compile_commands.json
 # Zig is based, use it!
 /.zig-cache
 /zig-out
+/example/.zig-cache
+/example/zig-out

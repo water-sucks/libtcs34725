@@ -42,6 +42,8 @@
             pkg-config
 
             libtcs34725
+
+            zig
           ];
         };
       };

@@ -25,18 +25,8 @@ pub fn build(b: *std.Build) !void {
     libtcs34725.addIncludePath(b.path("include"));
     libtcs34725.installHeadersDirectory(tcs34725_header, "", .{});
 
-    const src_dir = try fs.cwd().openDir("src", .{ .iterate = true });
-    var src_iter = src_dir.iterate();
-
-    const common_c_flags = &.{ "-Wall", "-Wextra", "-Werror", "-fPIC", "-g" };
-
-    while (try src_iter.next()) |entry| {
-        if (mem.endsWith(u8, entry.name, ".c")) {
-            const src_file = b.fmt("{s}/{s}", .{ "src", entry.name });
-            libtcs34725.addCSourceFiles(.{
-                .files = &.{src_file},
-                .flags = common_c_flags,
-            });
-        }
-    }
+    libtcs34725.addCSourceFiles(.{
+        .files = &.{"src/tcs34725.c"},
+        .flags = &.{ "-Wall", "-Wextra", "-Werror", "-fPIC", "-g" },
+    });
 }
