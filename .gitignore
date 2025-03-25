@@ -51,9 +51,15 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
+# pkg-config generated files
+*.pc
+
 # Nix/direnv shit
 /.direnv/
 /result
 
+example/tcs34725-example
+
 # editor cache
 /.ccls-cache/
+compile_commands.json
