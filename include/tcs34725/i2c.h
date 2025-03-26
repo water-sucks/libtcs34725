@@ -4,10 +4,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-struct i2c_device {
-  int fd;
-  uint8_t target_addr;
-};
+struct i2c_device;
 
 struct i2c_device* i2c_open(char* dev_path, uint8_t addr);
 void i2c_close(struct i2c_device* dev);

@@ -1,6 +1,11 @@
 #include "tcs34725.h"
+#include "tcs34725/i2c.h"
 
 #include <stdio.h>
+
+struct tcs34725 {
+  struct i2c_device* dev;
+};
 
 struct tcs34725* tcs34725_init(char* i2c_bus_path) {
   struct tcs34725* tcs = malloc(sizeof(struct tcs34725));
