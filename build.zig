@@ -45,6 +45,7 @@ pub fn build(b: *std.Build) !void {
 
 const src_files = &.{
     "tcs34725.c",
+    "i2c.c",
 };
 
 const cflags = &.{ "-Wall", "-Wextra", "-Werror" };

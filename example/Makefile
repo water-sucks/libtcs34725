@@ -1,5 +1,5 @@
-CFLAGS = -Wall -Wextra -Werror $(shell pkg-config --cflags tcs34725-static)
-LDFLAGS = $(shell pkg-config --libs tcs34725-static)
+CFLAGS = -Wall -Wextra -Werror $(shell pkg-config --cflags tcs34725)
+LDFLAGS = $(shell pkg-config --libs tcs34725)
 
 SRC := example.c
 OBJ := example.o
