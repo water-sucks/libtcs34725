@@ -5,7 +5,7 @@
 }:
 stdenv.mkDerivation {
   pname = "tcs34725-example";
-  version = "bruh";
+  version = "0.1.0";
   src = ./.;
 
   nativeBuildInputs = [
