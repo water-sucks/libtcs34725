@@ -6,6 +6,9 @@ for usage with general-purpose computers such as the Raspberry Pi.
 
 ## Installation
 
+**NOTE: This is a Linux-only library that relies on an I2C interface. Prefer
+using and/or developing this on Linux hosts.**
+
 There are a few ways to install this for local development: a `Makefile`, using
 Zig, or using Nix.
 
