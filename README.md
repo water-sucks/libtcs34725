@@ -23,11 +23,8 @@ make PREFIX=/usr install
 ```
 
 This will also install `pkg-config` files for usage in a Makefile or with other
-`pkg-config`-compliant systems. There are two that are provided, one for dynamic
-linking, and the other for static linking. Currently, static linking is only
-supported on `musl` targets.
-
-In order to use `pkg-config` properly, refer to the [Usage](#Usage) section.
+`pkg-config`-compliant systems. In order to use `pkg-config` properly, refer to
+the [Usage](#Usage) section.
 
 ### Nix
 
@@ -86,6 +83,10 @@ export PKG_CONFIG_PATH=/path/to/tcs34725/install/prefix/lib/pkgconfig:$PKG_CONFI
 
 Verify that this library can be discovered using
 `pkg-config --modversion tcs34725`.
+
+Compiling the library into your binaries or libraries statically is possible,
+just use the `-Wl,-Bstatic $(pkg-config --libs tcs34725) -Wl,-Bdynamic` form
+when compiling to only compile this library statically if so desired.
 
 ### Zig
 

@@ -39,7 +39,7 @@ install: static shared pkgconfig
 	cp -r $(INCLUDE_DIR)/* $(INCLUDE_INSTALL_DIR)
 	cp $(STATIC_LIB) $(SHARED_LIB) $(LIB_DIR)
 
-	cp tcs34725.pc tcs34725-static.pc $(PKGCONFIG_DIR)
+	cp tcs34725.pc $(PKGCONFIG_DIR)
 
 .PHONY: clean
 clean:
@@ -57,25 +57,10 @@ Cflags: -I$${includedir}
 Libs: -L$${libdir} -ltcs34725
 endef
 
-define PKG_CONFIG_STATIC
-prefix=$(PREFIX)
-includedir=$${prefix}/include
-libdir=$${prefix}/lib
-
-Name: $(LIB_NAME)-static
-Description: TCS34725 color sensor C library
-Version: $(VERSION)
-Cflags: -I$${includedir}
-Libs: -L$${libdir} -ltcs34725 -static
-endef
-
-pkgconfig: $(LIB_NAME).pc $(LIB_NAME)-static.pc
+pkgconfig: $(LIB_NAME).pc
 
 $(LIB_NAME).pc:
     $(file > $(LIB_NAME).pc,$(PKG_CONFIG))
-
-$(LIB_NAME)-static.pc:
-    $(file > $(LIB_NAME)-static.pc,$(PKG_CONFIG_STATIC))
 
 .PHONY: compile_commands.json
 compile_commands.json:
