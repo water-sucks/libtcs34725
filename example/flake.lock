@@ -111,15 +111,14 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 0,
-        "narHash": "sha256-mCEkXuSqQOpYVnVZZNHaeV7IGk9hooGMJKmK83tyRNE=",
         "path": "../.",
         "type": "path"
       },
       "original": {
         "path": "../.",
         "type": "path"
-      }
+      },
+      "parent": []
     }
   },
   "root": "root",
