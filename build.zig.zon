@@ -3,7 +3,12 @@
     .version = "0.1.0",
     .fingerprint = 0x72f34b11aadb21ce, // Changing this has security and trust implications.
     .minimum_zig_version = "0.14.0",
-    .dependencies = .{},
+    .dependencies = .{
+        .compile_commands = .{
+            .url = "git+https://github.com/the-argus/zig-compile-commands#2ff5bd248fe87cb88a4c6a7cb8593808f3b7359e",
+            .hash = "N-V-__8AAEnOAACdSeBo9q-uUtx9JBG4SH1-0SXvKVdy0V30",
+        },
+    },
     .paths = .{
         "build.zig",
         "build.zig.zon",

@@ -1,6 +1,9 @@
 const std = @import("std");
+const zcc = @import("compile_commands");
 
-pub fn build(b: *std.Build) void {
+const Compile = std.Build.Step.Compile;
+
+pub fn build(b: *std.Build) !void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
@@ -50,10 +53,14 @@ pub fn build(b: *std.Build) void {
 
     const run_step = b.step("run", "Run the app");
     run_step.dependOn(&run_cmd.step);
+
+    var targets = std.ArrayList(*Compile).init(b.allocator);
+    try targets.append(exe);
+    zcc.createStep(b, "cdb", try targets.toOwnedSlice());
 }
 
 const src_files = &.{
     "example.c",
 };
 
-const cflags = &.{ "-Wall", "-Wextra", "-Werror" };
+const cflags = &.{ "-Wall", "-Wextra", "-Werror", "-gen-cdb-fragment-path", ".zig-cache/cdb" };

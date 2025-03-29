@@ -6,7 +6,7 @@
 
     flake-parts.url = "github:hercules-ci/flake-parts";
 
-    tcs34725.url = ../.;
+    tcs34725.url = "path:../.";
   };
 
   outputs = inputs @ {
@@ -15,7 +15,7 @@
     ...
   }:
     flake-parts.lib.mkFlake {inherit inputs;} {
-      systems = ["x86_64-linux" "aarch64-linux"];
+      systems = ["x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin"];
 
       perSystem = {
         pkgs,
@@ -34,17 +34,19 @@
         devShells.default = pkgs.mkShell {
           name = "tcs34725-shell";
 
-          buildInputs = with pkgs; [
-            gnumake
-            gcc
+          buildInputs = with pkgs;
+            [
+              gnumake
+              gcc
 
-            bear
-            pkg-config
+              bear
+              pkg-config
 
-            libtcs34725
-
-            zig
-          ];
+              zig
+            ]
+            ++ lib.optionals pkgs.stdenv.isLinux [
+              libtcs34725
+            ];
         };
       };
     };

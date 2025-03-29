@@ -27,3 +27,17 @@ install: $(BIN)
 
 clean:
 	rm -f $(OBJ) $(BIN)
+
+
+.PHONY: compile_commands.json
+compile_commands.json:
+	@bear -- make clean all
+
+.PHONY: zig-compile-commands.json
+zig-compile_commands.json:
+	zig build -Dtarget=aarch64-linux-musl
+
+	(echo \[ ; cat .zig-cache/cdb/* ; echo {}\]) \
+		| perl -0777 -pe 's/,\n\{\}//igs' \
+		| jq . | grep -v 'no-default-config' \
+		> compile_commands.json

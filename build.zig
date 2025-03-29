@@ -1,4 +1,7 @@
 const std = @import("std");
+const zcc = @import("compile_commands");
+
+const Compile = std.Build.Step.Compile;
 
 pub fn build(b: *std.Build) !void {
     const target = b.standardTargetOptions(.{});
@@ -41,6 +44,10 @@ pub fn build(b: *std.Build) !void {
         .files = src_files,
         .flags = cflags,
     });
+
+    var targets = std.ArrayList(*Compile).init(b.allocator);
+    try targets.append(libtcs34725);
+    zcc.createStep(b, "cdb", try targets.toOwnedSlice());
 }
 
 const src_files = &.{
